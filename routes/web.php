@@ -1,4 +1,3 @@
 <?php
 
-
-Route::resource('/student','Admin\StudentController');
+Route::resource('/student', 'Admin\StudentController');
