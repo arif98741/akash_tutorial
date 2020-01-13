@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Session;
@@ -14,9 +15,10 @@ class StudentController extends Controller
     public function index()
     {
         $data = [
-            'students' => Student::orderBy('name')->get()
+            //'students' => Student::orderBy('name')->get()
+            'students' => Student::with(['department'])->get()
         ];
-
+        //return $data['students'];
 
         return view('admin.student.index')->with($data);
     }
@@ -24,7 +26,10 @@ class StudentController extends Controller
 
     public function create()
     {
-        return view('admin.student.create');
+        $data = [
+            'departments' => Department::orderBy('department_name', 'asc')->get()
+        ];
+        return view('admin.student.create')->with($data);
     }
 
 
@@ -49,17 +54,19 @@ class StudentController extends Controller
 
     public function edit(Student $student)
     {
+
         $data = [
-            'student' => $student
+            'student' => $student,
+            'departments' => Department::orderBy('department_name', 'asc')->get()
         ];
         return view('admin.student.edit')->with($data);
     }
-
 
     public function update(Request $request, Student $student)
     {
         $student->name = $request->name;
         $student->roll = $request->roll;
+        $student->department_id = $request->department_id;
         $student->status = $request->status;
 
         if ($student->save()) {
@@ -70,7 +77,6 @@ class StudentController extends Controller
             return redirect()->route('student.index');
         }
     }
-
 
     public function destroy(Student $student)
     {
@@ -87,7 +93,8 @@ class StudentController extends Controller
     {
         return request()->validate([
             'name'   => 'required',
-            'roll'   => 'required|unique:students|min:3'
+            'roll'   => 'required|unique:students|min:3',
+            'department_id'   => 'required',
         ]);
     }
 }

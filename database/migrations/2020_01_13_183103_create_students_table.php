@@ -13,7 +13,9 @@ class CreateStudentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('roll');
+            $table->unsignedBigInteger('department_id');
             $table->tinyInteger('status')->default(1);
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

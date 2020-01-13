@@ -16,8 +16,8 @@
     <div class="container">
         <h2 class="text-center">Student Table</h2>
         <a href="{{ route('student.create') }}" class="btn btn-success">
-                Add Student
-            </a>
+            Add Student
+        </a>
         <hr> @if(Session::has('success'))
         <p class="alert alert-success">{{ Session::get('success') }}</p>
         @endif
@@ -26,6 +26,7 @@
                 <tr>
                     <th>Serial</th>
                     <th>Name</th>
+                    <th>Department</th>
                     <th>Roll</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -37,19 +38,23 @@
                 <tr>
                     <td class="text-center">{{ ++$key }}</td>
                     <td>{{ $student->name }}</td>
+                    <td>
+                        {{ $student->department->department_name }}
+                    </td>
                     <td>{{ $student->roll }}</td>
+
                     <td class="text-center">
                         @if($student->status == 1) Active @else Deactivated @endif
                     </td>
                     <td>
-                        <a href="{{ route('student.destroy',$student->id) }}" class="btn btn-primary">
-                                Edit
-                            </a>
+                        <a href="{{ route('student.edit',$student->id) }}" class="btn btn-primary">
+                            Edit
+                        </a>
                         <form action="{{ route('student.destroy',$student->id) }}" method="post">
                             @csrf @method('DELETE')
                             <button class="btn btn-warning" type="submit" onclick="return(confirm('are you sure to delete?'))">
-                                    Delete
-                                </button>
+                                Delete
+                            </button>
                         </form>
                     </td>
                 </tr>

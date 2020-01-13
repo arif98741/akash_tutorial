@@ -34,6 +34,18 @@
                 <div class="form-control-feedback">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="form-group">
+                <label>Enter Department</label>
+                <select name="department_id" id="" class="form-control">
+
+                    @foreach($departments as $department)
+                    <option value="{{ $department->id }}" @if($department->id == $student->department_id)
+                        selected @endif>{{ $department->department_name }}</option>
+                    @endforeach
+                </select> @error('department_id')
+                <div class="form-control-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
             <div class="form-group">
                 <label>Status</label>
@@ -49,7 +61,7 @@
 
             <div class=" form-group">
 
-                <button type="submit" class="btn btn-success"        >Update</button>
+                <button type="submit" class="btn btn-success">Update</button>
             </div>
 
 
