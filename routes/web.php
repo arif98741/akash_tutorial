@@ -10,3 +10,4 @@ Auth::routes();
 Route::get('/home', function () {
     return redirect('');
 });
+//this is dev branch code

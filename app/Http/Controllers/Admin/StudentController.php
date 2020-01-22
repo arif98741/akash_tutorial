@@ -15,9 +15,7 @@ class StudentController extends Controller
 
     public function index()
     {
-        if (!Auth::check()) {
-            return redirect('/');
-        }
+        //here auth check was available
 
         $data = [
             // 'user_data' => Auth::user(),
