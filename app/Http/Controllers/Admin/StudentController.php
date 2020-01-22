@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 
 class StudentController extends Controller
@@ -14,12 +15,15 @@ class StudentController extends Controller
 
     public function index()
     {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+
         $data = [
-            //'students' => Student::orderBy('name')->get()
+            // 'user_data' => Auth::user(),
             'students' => Student::with(['department'])->get()
         ];
-        //return $data['students'];
-
+        // return $data['user_data'];
         return view('admin.student.index')->with($data);
     }
 

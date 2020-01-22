@@ -18,6 +18,16 @@
         <a href="{{ route('student.create') }}" class="btn btn-success">
             Add Student
         </a>
+        <a class="btn btn-warning" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+            {{ __('Logout') }}
+        </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+
+
         <hr> @if(Session::has('success'))
         <p class="alert alert-success">{{ Session::get('success') }}</p>
         @endif
